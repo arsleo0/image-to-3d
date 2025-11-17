@@ -1,0 +1,26 @@
+# Deep Learning and AI
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+timm>=0.9.0
+
+# 3D Processing
+open3d>=0.17.0
+trimesh>=3.23.0
+scipy>=1.10.0
+
+# Image Processing
+Pillow>=10.0.0
+rembg>=2.0.50
+opencv-python>=4.8.0
+scikit-image>=0.21.0
+
+# Utilities
+numpy>=1.24.0
+matplotlib>=3.7.0
+PyYAML>=6.0
+tqdm>=4.65.0
+pillow-heif>=0.13.0
+
+# Logging and Monitoring
+colorlog>=6.7.0

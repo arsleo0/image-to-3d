@@ -1,0 +1,100 @@
+# Image-to-3D Pipeline Configuration
+
+# Paths
+paths:
+  input_dir: "input"
+  processing_dir: "processing"
+  output_dir: "output"
+  stl_dir: "output/stl"
+  previews_dir: "output/previews"
+  reports_dir: "output/reports"
+  logs_dir: "logs"
+
+# System Settings
+system:
+  auto_detect_gpu: true
+  cuda_device: 0
+  cpu_fallback: true
+  max_vram_gb: 8
+  num_threads: 4
+
+# Image Processing
+image:
+  supported_formats: ["jpg", "jpeg", "png", "heic", "webp"]
+  target_resolution: 1024  # 512 for faster, 1024 for quality
+  padding_percent: 10  # Percent padding around object
+  background_removal: true
+  alpha_matting: true
+  bilateral_filter_d: 9
+  bilateral_filter_sigma_color: 75
+  bilateral_filter_sigma_space: 75
+
+# Depth Estimation
+depth:
+  model: "Intel/dpt-large"  # MiDaS DPT-Large
+  model_type: "dpt_large"
+  optimize: true
+  normalize_range: true
+  invert_depth: false
+  depth_scale_factor: 1.0
+  hole_filling: true
+
+# Mesh Generation
+mesh:
+  method: "poisson"  # poisson or ball_pivoting
+  poisson_depth: 9  # Higher = more detail (8-10 typical)
+  point_cloud_samples: 100000
+  simplify_faces: 50000  # Target face count (50k detailed, 10k simple)
+  smooth_iterations: 2
+  ensure_watertight: true
+  fix_manifold: true
+
+# 3D Printing Optimization
+printing:
+  max_dimension_mm: 100
+  min_wall_thickness_mm: 2.0
+  auto_orient: true
+  add_drain_holes: false  # For resin printing
+  drain_hole_diameter_mm: 2.0
+  support_optimization: true
+
+# Business Settings
+business:
+  material_cost_per_gram: 0.02  # EUR
+  print_speed_mm_s: 60
+  retail_markup: 5.0  # 5x material cost
+  sku_prefix: "3DP"
+  category_codes:
+    default: "GEN"
+    figurine: "FIG"
+    decoration: "DEC"
+    functional: "FUN"
+    prototype: "PRO"
+
+# Export Settings
+export:
+  stl_units: "mm"
+  stl_ascii: false  # Binary STL is smaller
+  generate_previews: true
+  preview_angles: [0, 45, 90, 135]  # Degrees
+  preview_resolution: 800
+  thumbnail_size: 512
+  thumbnail_background: [255, 255, 255]  # White
+  export_metadata: true
+
+# Batch Processing
+batch:
+  max_concurrent: 1  # Process one at a time for reliability
+  continue_on_error: true
+  save_progress: true
+  progress_file: "processing/batch_progress.json"
+  notification_on_complete: true
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  console_output: true
+  file_output: true
+  log_file: "logs/pipeline.log"
+  max_log_size_mb: 50
+  backup_count: 5
